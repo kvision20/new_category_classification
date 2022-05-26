@@ -48,8 +48,13 @@ for i in range(0, 2): #6가지 섹션별 크롤링(정치, 경제, 사회 등...
     df_section_titles = pd.DataFrame(titles, columns=['titles'])   #저장하는 코드
     df_section_titles['category'] = category[i]
     df_titles = pd.concat([df_titles, df_section_titles], ignore_index=True)
-    df_titles.to_csv('./crawling_data_{}_last.csv', index=False)
+    df_titles.to_csv('./crawling_data_world_last.csv', index=False)
     titles = []
+df_section_titles = pd.DataFrame(titles, columns=['titles'])
+df_section_titles['category'] = category[i]
+df_titles = pd.concat([df_titles, df_section_titles], ignore_index=True)
+df_titles.to_csv('./crawling_data.csv', index=False)
+
 driver.close()
 
 
