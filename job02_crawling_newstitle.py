@@ -17,7 +17,7 @@ options.add_argument('--disable-dev-shm-usage')
 options.add_argument('disable-gpu')
 driver = webdriver.Chrome('./chromedriver', options=options)
 df_titles = pd.DataFrame()
-for i in range(0, 6): #6가지 섹션별 크롤링(정치, 경제, 사회 등...)
+for i in range(0, 2): #6가지 섹션별 크롤링(정치, 경제, 사회 등...)
     titles = []
     for j in range(1,pages[i]+1):   #페이지별 주소 변경
         url = 'https://news.naver.com/main/main.naver?mode=LSD&mid=shm&sid1=10{}#&date=%2000:00:00&page={}'.format(i, j)
