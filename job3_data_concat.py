@@ -5,7 +5,7 @@ data_path=glob.glob('./crawling_data/*')
 print(data_path)
 
 df=pd.DataFrame()
-for path in data_path[1:]:
+for path in data_path[:-1]:
     df_temp=pd.read_csv(path)
     df=pd.concat([df, df_temp])
 df.dropna(inplace=True)
