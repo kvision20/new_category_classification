@@ -3,7 +3,7 @@ from selenium.common.exceptions import NoSuchElementException, StaleElementRefer
 import pandas as pd
 import re
 import time
-
+import datetime
 
 category = ['Politics', 'Economic', 'Social', 'Culture', 'World', 'IT']
 pages = [110, 110, 110, 78, 110, 66]
@@ -17,7 +17,7 @@ options.add_argument('--disable-dev-shm-usage')
 options.add_argument('disable-gpu')
 driver = webdriver.Chrome('./chromedriver', options=options)
 df_titles = pd.DataFrame()
-for i in range(0, 2): #6가지 섹션별 크롤링(정치, 경제, 사회 등...)
+for i in range(0, 6): #6가지 섹션별 크롤링(정치, 경제, 사회 등...)
     titles = []
     for j in range(1,pages[i]+1):   #페이지별 주소 변경
         url = 'https://news.naver.com/main/main.naver?mode=LSD&mid=shm&sid1=10{}#&date=%2000:00:00&page={}'.format(i, j)
@@ -43,18 +43,18 @@ for i in range(0, 2): #6가지 섹션별 크롤링(정치, 경제, 사회 등...
             df_section_titles = pd.DataFrame(titles, columns=['titles'])
             df_section_titles['category'] = category[i]
             df_titles = pd.concat([df_titles, df_section_titles], ignore_index=True)
-            df_titles.to_csv('./crawling_data_{}_{}_{}.csv'.format(category[i], j-29, j), index=False)
+            df_section_titles.to_csv('./crawling_data/crawling_data_{}_{}_{}.csv'.format(category[i], j-29, j), index=False)
             titles = []
     df_section_titles = pd.DataFrame(titles, columns=['titles'])   #저장하는 코드
     df_section_titles['category'] = category[i]
     df_titles = pd.concat([df_titles, df_section_titles], ignore_index=True)
-    df_titles.to_csv('./crawling_data_world_last.csv', index=False)
+    df_titles.to_csv('./crawling_data/crawling_data_{}_last.csv'.format(category[i]), index=False)
     titles = []
 df_section_titles = pd.DataFrame(titles, columns=['titles'])
 df_section_titles['category'] = category[i]
 df_titles = pd.concat([df_titles, df_section_titles], ignore_index=True)
-df_titles.to_csv('./crawling_data.csv', index=False)
-
+df_titles.to_csv('./crawling_data/naver_headline_news_titles_{}.csv'.format(
+    datetime.datetime.now().strftime('%Y%m%d')), index=False)
 driver.close()
 
 
